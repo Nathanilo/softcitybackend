@@ -1,8 +1,9 @@
-<template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
-</template>
+<script setup>
+import NavBar from "@/components/NavBar.vue";
+import { RouterView } from "vue-router";
+</script>
 
+<template>
+  <NavBar />
+  <router-view />
+</template>
