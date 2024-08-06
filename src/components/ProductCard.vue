@@ -6,15 +6,13 @@ const props = defineProps({
   product: Object,
 });
 
-
 const shortDescription = computed(() => {
   let description = props.product.description;
 
-  return description.length > 100
-    ? description.slice(0, 100) + "..."
+  return description.length > 80
+    ? description.slice(0, 80) + "..."
     : description;
 });
-
 </script>
 
 <template>
@@ -32,8 +30,6 @@ const shortDescription = computed(() => {
     </div>
 
     <p class="text-black mb-2">{{ shortDescription }}</p>
-    
-    
 
     <div class="border border-gray-100 mb-5"></div>
 
@@ -45,7 +41,7 @@ const shortDescription = computed(() => {
         :to="'/products/' + product.id"
         class="h-[36px] bg-gray-700 hover:bg-[#e81101] text-white px-4 py-2 rounded-lg text-center text-sm"
       >
-        view More
+        View More
       </router-link>
     </div>
   </div>
