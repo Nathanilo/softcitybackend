@@ -4,5 +4,5 @@ import ProductListings from "@/components/ProductListings.vue";
 </script>
 <template>
   <Hero />
-  <ProductListings />
+  <ProductListings :limit="3" :show-button="true"/>
 </template>

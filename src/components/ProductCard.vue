@@ -1,11 +1,20 @@
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, ref, computed } from "vue";
 import { RouterLink } from "vue-router";
-import { ref } from "vue";
 
-defineProps({
+const props = defineProps({
   product: Object,
 });
+
+
+const shortDescription = computed(() => {
+  let description = props.product.description;
+
+  return description.length > 100
+    ? description.slice(0, 100) + "..."
+    : description;
+});
+
 </script>
 
 <template>
@@ -22,7 +31,9 @@ defineProps({
       />
     </div>
 
-    <h3 class="text-black mb-2">{{ product.description }}</h3>
+    <p class="text-black mb-2">{{ shortDescription }}</p>
+    
+    
 
     <div class="border border-gray-100 mb-5"></div>
 

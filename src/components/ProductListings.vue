@@ -1,6 +1,5 @@
 <script setup>
 import productData from "@/products.json";
-import productCard from "@/components/ProductCard.vue";
 import { ref, defineProps } from "vue";
 import { RouterLink } from "vue-router";
 import ProductCard from "@/components/ProductCard.vue";
@@ -25,7 +24,7 @@ console.log(products.value);
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <ProductCard
-          v-for="product in products"
+          v-for="product in products.slice(0, limit || products.length)"
           :key="product.id"
           :product="product"
           class="bg-white rounded-xl shadow-md relative"
@@ -33,7 +32,7 @@ console.log(products.value);
       </div>
     </div>
   </section>
-  <section class="m-auto max-w-lg my-10 px-6">
+  <section v-if="showButton" class="m-auto max-w-lg my-10 px-6">
     <RouterLink
       to="/products"
       class="block bg-gray-700 text-white text-center py-4 px-6 rounded-xl hover:bg-[#e81101]"
