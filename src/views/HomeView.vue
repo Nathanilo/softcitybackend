@@ -1,5 +1,8 @@
+<script setup>
+import Hero from "@/components/Hero.vue";
+import ProductListings from "@/components/ProductListings.vue";
+</script>
 <template>
-  <div class="">
-    <h1 class="text-3xl text-center font-bold underline">Welcome to SoftCity</h1>
-  </div>
+  <Hero />
+  <ProductListings />
 </template>

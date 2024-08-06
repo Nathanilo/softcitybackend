@@ -10,7 +10,7 @@ const toggleMenu = () => {
 </script>
 <template>
   <nav
-    class="flex flex-col md:flex-row items-center justify-between bg-gray-900 text-white py-6 px-8"
+    class="flex flex-col md:flex-row items-center justify-between bg-gray-700 text-white py-4 px-8"
   >
     <div class="flex items-center justify-between w-full md:w-auto">
       <RouterLink
@@ -38,19 +38,19 @@ const toggleMenu = () => {
     >
       <router-link
         to="/"
-        class="text-white hover:text-[#ff6f61] block md:inline-block text-center md:text-left"
+        class="text-white hover:text-[#e81101] block md:inline-block text-center md:text-left"
       >
         Home
       </router-link>
       <router-link
         to="/products"
-        class="text-white hover:text-[#ff6f61] block md:inline-block text-center md:text-left"
+        class="text-white hover:text-[#e81101] block md:inline-block text-center md:text-left"
       >
         Products
       </router-link>
       <router-link
         to="/login"
-        class="text-white hover:text-[#ff6f61] block md:inline-block text-center md:text-left"
+        class="text-white hover:text-[#e81101] block md:inline-block text-center md:text-left"
       >
         Log in
       </router-link>
