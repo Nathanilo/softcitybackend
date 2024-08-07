@@ -13,10 +13,26 @@ const routes = [
     component: HomeView,
   },
   {
+    path: "/dashboard",
+    name: "dashboard",
+    component: HomeView,
+  },
+  {
+    path: "/dashboard/products",
+    name: "dashboard-products",
+    component: ProductsView,
+  },
+  {
+    path: "/dashboard/products/:id",
+    name: "dashboard-product",
+    component: ProductView,
+  },
+  {
     path: "/products",
     name: "products",
     component: ProductsView,
   },
+
   {
     path: "/products/:id",
     name: "product",
@@ -28,10 +44,9 @@ const routes = [
     component: LoginView,
   },
   {
-    path:"/signup",
-    name:"signup",
-    component:SignupView
-
+    path: "/register",
+    name: "register",
+    component: SignupView,
   },
   {
     path: "/:catchAll(.*)*",

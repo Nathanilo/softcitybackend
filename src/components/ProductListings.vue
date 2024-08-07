@@ -58,15 +58,19 @@ const handleSearch = (event) => {
 </script>
 
 <template>
-  <section class="px-4">
+ 
+  <section class="px-4 relative">
     <div class="container-xl lg:container m-auto py-10 px-4 mt-12">
       <div
         v-if="currentPath.endsWith('products')"
         class="flex flex-col -mt-12 md:my-10 items-center md:flex-row md:justify-center md:-mt-8"
       >
-        <h2 class="text-3xl font-bold text-primary mb-4 md:mb-0  text-center md:mr-8">
+        <h2
+          class="text-3xl font-bold text-primary mb-4 md:mb-0 text-center md:mr-8"
+        >
           Browse Products
         </h2>
+
         <form class="w-full mb-6 md:mb-0 sm:w-2/3 md:w-1/3 relative">
           <input
             v-model="state.searchTerm"
@@ -104,7 +108,7 @@ const handleSearch = (event) => {
       </div>
       <div v-if="filteredProducts.length === 0" class="text-center mt-8">
         <p>No products found</p>
-        </div>
+      </div>
     </div>
   </section>
   <section v-if="!state.isLoading">

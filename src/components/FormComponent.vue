@@ -1,15 +1,19 @@
 <script setup>
-import { defineProps, ref } from "vue";
+import { defineProps, h, ref } from "vue";
 
 defineProps({
   title: {
     type: String,
   },
+
+  handleSubmit: {
+    type: Function,
+  },
 });
 </script>
 
 <template>
-  <form>
+  <form @submit.prevent="handleSubmit">
     <h2 class="text-3xl text-center font-semibold mb-6">{{ title }}</h2>
 
     <slot name="content"></slot>

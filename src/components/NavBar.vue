@@ -1,8 +1,13 @@
 <script setup>
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
 import { ref } from "vue";
+import { useRoute } from "vue-router";
 
 const menuOpen = ref(false);
+
+const route = useRoute();
+
+const currentPath = ref(route.path);
 
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
@@ -54,6 +59,15 @@ const toggleMenu = () => {
       >
         Log in
       </router-link>
+      <router-link
+        v-if="currentPath.endsWith('/dashboard')"
+        to="/login"
+        class="text-white hover:text-[#e81101] block md:inline-block text-center md:text-left"
+      >
+        Log out
+      </router-link>
     </div>
+
+    
   </nav>
 </template>

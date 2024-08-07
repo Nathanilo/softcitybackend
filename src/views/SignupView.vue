@@ -1,14 +1,31 @@
 <script setup>
 import router from "@/router";
-import axios from "axios";
+import axiosInstance from "@/axiosConfig";
 import { reactive, ref } from "vue";
 import FormComponent from "@/components/FormComponent.vue";
+import { useToast } from "vue-toastification";
 
 const form = ref({
   username: "",
   email: "",
   password: "",
 });
+
+const toast = useToast();
+
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  try {
+    console.log(form.value);
+    const response = await axiosInstance.post("/register", form.value);
+    console.log(response.data);
+    router.push("/login");
+    toast.success("Signup successful.");
+  } catch (error) {
+    console.error(error);
+    toast.error("An error occurred. Please try again.");
+  }
+};
 </script>
 
 <template>
@@ -17,14 +34,14 @@ const form = ref({
       <div
         class="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0"
       >
-        <FormComponent title="Signup to SoftCity">
+        <FormComponent title="Signup to SoftCity" :handleSubmit="handleSubmit">
           <template v-slot:content>
             <div class="mb-4">
               <label for="type" class="block text-gray-700 font-bold mb-2"
                 >Username</label
               >
               <input
-                v-model="form.email"
+                v-model="form.username"
                 id="username"
                 name="username"
                 class="border rounded w-full py-2 px-3"

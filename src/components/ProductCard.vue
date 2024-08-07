@@ -1,6 +1,9 @@
 <script setup>
 import { defineProps, ref, computed } from "vue";
-import { RouterLink } from "vue-router";
+import { RouterLink, useRoute } from "vue-router";
+
+const route = useRoute();
+const currentPath = ref(route.path);
 
 const props = defineProps({
   product: Object,
@@ -38,7 +41,15 @@ const shortDescription = computed(() => {
         <p class="text-2xl font-semibold">₦{{ product.price }}</p>
       </div>
       <router-link
+        v-if="!currentPath.endsWith('dashboard/products')"
         :to="'/products/' + product.id"
+        class="h-[36px] bg-gray-700 hover:bg-[#e81101] text-white px-4 py-2 rounded-lg text-center text-sm"
+      >
+        View More
+      </router-link>
+      <router-link
+        v-else
+        :to="'/dashboard/products/' + product.id"
         class="h-[36px] bg-gray-700 hover:bg-[#e81101] text-white px-4 py-2 rounded-lg text-center text-sm"
       >
         View More

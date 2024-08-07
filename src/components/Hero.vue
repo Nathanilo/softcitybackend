@@ -1,6 +1,11 @@
 <script setup>
-import defineProps from "vue";
+import { defineProps, ref } from "vue";
 import heroImg from "@/assets/img/hero-img.png";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+
+const currentPath = ref(route.path);
 
 defineProps({
   title: {
@@ -15,6 +20,7 @@ defineProps({
 </script>
 
 <template>
+ 
   <div class="text-black flex flex-col items-center justify-center mt-8 px-4">
     <div class="w-full flex flex-col lg:flex-row justify-center items-center">
       <div class="p-4 text-center lg:text-left lg:w-1/2 flex-shrink-0">
@@ -35,10 +41,18 @@ defineProps({
               Explore Products
             </router-link>
             <router-link
+              v-if="currentPath.endsWith('/')"
               to="/login"
               class="text-white bg-gray-700 px-4 py-2 rounded-md ml-0 sm:ml-4 text-center"
             >
               Log in
+            </router-link>
+            <router-link
+              v-if="currentPath.endsWith('/dashboard')"
+              to="/login"
+              class="text-white bg-gray-700 px-4 py-2 rounded-md ml-0 sm:ml-4 text-center"
+            >
+              Log out
             </router-link>
           </div>
         </div>
