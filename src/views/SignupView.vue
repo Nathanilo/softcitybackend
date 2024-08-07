@@ -5,6 +5,7 @@ import { reactive, ref } from "vue";
 import FormComponent from "@/components/FormComponent.vue";
 
 const form = ref({
+  username: "",
   email: "",
   password: "",
 });
@@ -16,8 +17,21 @@ const form = ref({
       <div
         class="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0"
       >
-        <FormComponent title="Login to SoftCity">
+        <FormComponent title="Signup to SoftCity">
           <template v-slot:content>
+            <div class="mb-4">
+              <label for="type" class="block text-gray-700 font-bold mb-2"
+                >Username</label
+              >
+              <input
+                v-model="form.email"
+                id="username"
+                name="username"
+                class="border rounded w-full py-2 px-3"
+                placeholder="Enter a username"
+                required
+              />
+            </div>
             <div class="mb-4">
               <label for="type" class="block text-gray-700 font-bold mb-2"
                 >Email</label
@@ -50,14 +64,14 @@ const form = ref({
                 class="bg-gray-700 text-white font-bold py-2 px-4 rounded-md w-full focus:outline-none focus:shadow-outline"
                 type="submit"
               >
-                Login
+                Signup
               </button>
             </div>
           </template>
           <template v-slot:link class="mt-4 text-center">
-            <router-link to="/signup" class="text-gray-700"
-              >Don't have an account?
-              <span class="text-primary">Signup here</span></router-link
+            <router-link to="/Login" class="text-gray-700"
+              >Already have an account?
+              <span class="text-primary">Login here</span></router-link
             >
           </template>
         </FormComponent>
