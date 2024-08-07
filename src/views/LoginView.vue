@@ -3,8 +3,10 @@ import router from "@/router";
 import axios from "axios";
 import axiosInstance from "@/axiosConfig";
 import { useToast } from "vue-toastification";
-import { reactive, ref } from "vue";
+import { reactive, ref, watch } from "vue";
 import FormComponent from "@/components/FormComponent.vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 const form = ref({
   email: "",
@@ -13,22 +15,33 @@ const form = ref({
 
 const toast = useToast();
 
+const store = useStore();
+const route = useRouter();
+
 const handleSubmit = async (event) => {
   event.preventDefault();
+
+  const credentials = { email: email.value, password: password.value };
   try {
-    const response = await axiosInstance.post("/login", form.value);
-    console.log(response.data);
-    router.push("/dashboard");
+    await store.dispatch("login", credentials);
+    router.push("/dashboard"); // Redirect dashboard
     toast.success("Login successful.");
   } catch (error) {
-    console.error(error);
-    toast.error("An error occurred. Please try again.");
+    console.error("Login failed:", error);
+    toast.error("An error occurred.");
   }
 };
+
+watch(
+  () => route.path,
+  (newPath) => {
+    currentPath.value = newPath;
+  }
+);
 </script>
 
 <template>
-  <section class="">
+  <section class="mt-20">
     <div class="container m-auto max-w-2xl py-24">
       <div
         class="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0"

@@ -24,7 +24,7 @@ watch(
     <button
       v-if="currentPath.includes('dashboard')"
       class="fixed z-50 bottom-6 right-6"
-      @click="$router.push('/add-product')"
+      @click="$router.push('/dashboard/add-product')"
     >
       <i class="pi pi-plus bg-primary py-6 px-6 rounded-[50%] text-white"></i>
     </button>

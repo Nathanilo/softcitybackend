@@ -33,5 +33,7 @@ app.use(Toast, {
   rtl: false,
 });
 
+app.use(store)
+
 // Mount the app
 app.mount("#app");

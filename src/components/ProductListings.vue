@@ -4,6 +4,8 @@ import { RouterLink, useRoute } from "vue-router";
 import ProductCard from "@/components/ProductCard.vue";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import axios from "axios";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 defineProps({
   limit: Number,
@@ -14,7 +16,18 @@ defineProps({
 });
 
 const route = useRoute();
-const currentPath = ref(route.path);
+const router = useRouter();
+const store = useStore();
+
+// Watch route changes to update currentPath
+const currentPath = computed(() => route.path);
+
+// Check if user is authenticated
+const isAuthenticated = computed(() => store.getters.isAuthenticated);
+
+const productsLink = computed(() =>
+  isAuthenticated.value ? "/dashboard/products" : "/products"
+);
 
 const state = reactive({
   products: [],
@@ -58,15 +71,14 @@ const handleSearch = (event) => {
 </script>
 
 <template>
- 
   <section class="px-4 relative">
     <div class="container-xl lg:container m-auto py-10 px-4 mt-12">
       <div
         v-if="currentPath.endsWith('products')"
-        class="flex flex-col -mt-12 md:my-10 items-center md:flex-row md:justify-center md:-mt-8"
+        class="flex flex-col -mt-12 md:my-10 items-center md:flex-row md:justify-center md:-mt-8 pt-10"
       >
         <h2
-          class="text-3xl font-bold text-primary mb-4 md:mb-0 text-center md:mr-8"
+          class="text-3xl font-bold text-primary mb-8 md:mb-0 text-center md:mr-8"
         >
           Browse Products
         </h2>
@@ -114,8 +126,8 @@ const handleSearch = (event) => {
   <section v-if="!state.isLoading">
     <div v-if="showButton" class="m-auto max-w-lg my-10 px-6">
       <RouterLink
-        to="/products"
-        class="block bg-gray-700 text-white text-center py-4 px-6 rounded-xl hover:bg-primary"
+        :to="productsLink"
+        class="block bg-gray-700 text-white text-center py-3 px-6 rounded-xl hover:bg-primary"
         >View All products</RouterLink
       >
     </div>

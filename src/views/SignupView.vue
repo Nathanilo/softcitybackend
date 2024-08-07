@@ -29,7 +29,7 @@ const handleSubmit = async (event) => {
 </script>
 
 <template>
-  <section class="">
+  <section class="pt-20">
     <div class="container m-auto max-w-2xl py-24">
       <div
         class="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0"

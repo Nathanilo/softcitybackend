@@ -1,17 +1,28 @@
 <script setup>
 import { defineProps, ref, computed } from "vue";
-import { RouterLink, useRoute } from "vue-router";
+import { RouterLink, useRoute, useRouter } from "vue-router";
+import { useStore } from "vuex";
 
+const router = useRouter();
+const store = useStore();
 const route = useRoute();
-const currentPath = ref(route.path);
 
 const props = defineProps({
   product: Object,
 });
 
+// Check if user is authenticated
+const isAuthenticated = computed(() => store.getters.isAuthenticated);
+
+// Determine the product link based on authentication status
+const productLink = computed(() =>
+  isAuthenticated.value
+    ? "/dashboard/products/" + props.product.id
+    : "/products/" + props.product.id
+);
+
 const shortDescription = computed(() => {
   let description = props.product.description;
-
   return description.length > 80
     ? description.slice(0, 80) + "..."
     : description;
@@ -41,15 +52,7 @@ const shortDescription = computed(() => {
         <p class="text-2xl font-semibold">₦{{ product.price }}</p>
       </div>
       <router-link
-        v-if="!currentPath.endsWith('dashboard/products')"
-        :to="'/products/' + product.id"
-        class="h-[36px] bg-gray-700 hover:bg-[#e81101] text-white px-4 py-2 rounded-lg text-center text-sm"
-      >
-        View More
-      </router-link>
-      <router-link
-        v-else
-        :to="'/dashboard/products/' + product.id"
+        :to="productLink"
         class="h-[36px] bg-gray-700 hover:bg-[#e81101] text-white px-4 py-2 rounded-lg text-center text-sm"
       >
         View More
