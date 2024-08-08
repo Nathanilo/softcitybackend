@@ -17,7 +17,7 @@ const handleSubmit = async (event) => {
   event.preventDefault();
   try {
     console.log(form.value);
-    const response = await authInstance.post("/register", form.value);
+    const response = await authInstance.post("/api/auth/register", form.value);
     console.log(response.data);
     router.push("/login");
     toast.success("Signup successful.");
