@@ -1,19 +1,17 @@
-# softcity
+# Softcity Frontend
 
-## Project setup
-```
-npm install
-```
+# Mockup designs
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+- https://excalidraw.com/#json=D6oth8SOcjXr0nTA7aXCe,3I4HH8ne9K5NVRD2NNyo1w
 
-### Compiles and minifies for production
-```
-npm run build
-```
+# To Run - Frontend
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Requirements
+
+- Ensure backend is running. See backend repo [here](https://github.com/Nathanilo/softcitybackend)
+
+## Steps
+
+- Clone the frontend repo by running `git clone https://github.com/Nathanilo/softcityfrontend`
+- Run `npm install` to install necessary dependencies
+- Run `npm run dev` to start the server

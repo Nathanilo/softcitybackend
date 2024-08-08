@@ -42,7 +42,7 @@ export default createStore({
   actions: {
     async fetchItems({ commit }) {
       try {
-        const response = await productsInstance.get("/");
+        const response = await productsInstance.get("/api/products/");
         commit("setItems", response.data);
       } catch (error) {
         console.error("Error fetching items:", error);
@@ -50,7 +50,7 @@ export default createStore({
     },
     async createItem({ commit }, item) {
       try {
-        const response = await productsAuthInstance.post("/", item);
+        const response = await productsAuthInstance.post("/api/products/", item);
         commit("addItem", response.data);
       } catch (error) {
         console.error("Error creating item:", error);
@@ -58,7 +58,7 @@ export default createStore({
     },
     async editItem({ commit }, item) {
       try {
-        const response = await productsAuthInstance.put(`${item.id}`, item);
+        const response = await productsAuthInstance.put(`/api/products/${item.id}`, item);
         commit("updateItem", response.data);
       } catch (error) {
         console.error("Error editing item:", error);
@@ -66,7 +66,7 @@ export default createStore({
     },
     async removeItem({ commit }, itemId) {
       try {
-        await productsInstance.delete(`/products/${itemId}`);
+        await productsInstance.delete(`/api/products/${itemId}`);
         commit("deleteItem", itemId);
       } catch (error) {
         console.error("Error deleting item:", error);
@@ -74,7 +74,7 @@ export default createStore({
     },
     async login({ commit }, credentials) {
       try {
-        const response = await authInstance.post("/login", credentials);
+        const response = await authInstance.post("/api/auth/login", credentials);
         const { user, token } = response.data;
         commit("setUser", user);
         commit("setToken", token);

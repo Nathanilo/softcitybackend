@@ -40,7 +40,7 @@ const handleSubmit = async (event) => {
   };
 
   try {
-    await productsAuthInstance.put(`${productId}`, updatedProduct);
+    await productsAuthInstance.put(`/api/products/${productId}`, updatedProduct);
     toast.success("Product updated successfully");
     router.push("/dashboard");
   } catch (error) {
@@ -52,7 +52,7 @@ const handleSubmit = async (event) => {
 onMounted(async () => {
   try {
     state.isLoading = true;
-    const response = await productsInstance.get(`/${productId}`);
+    const response = await productsInstance.get(`/api/products/${productId}`);
 
     state.product = await response.data;
 

@@ -27,7 +27,7 @@ const state = reactive({
 onMounted(async () => {
   try {
     state.isLoading = true;
-    const response = await productsInstance.get(`/${productId.value}`);
+    const response = await productsInstance.get(`/api/products/${productId.value}`);
     state.product = response.data;
   } catch (error) {
     console.error(error);
@@ -39,7 +39,7 @@ onMounted(async () => {
 const handleDelete = async (event) => {
   event.preventDefault();
   try {
-    await productsAuthInstance.delete(`/${productId.value}`);
+    await productsAuthInstance.delete(`/api/products/${productId.value}`);
     router.push("/dashboard/products");
     toast.success("Product removed successfully");
   } catch (error) {
