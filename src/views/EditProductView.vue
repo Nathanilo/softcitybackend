@@ -1,35 +1,73 @@
 <script setup>
 import router from "@/router";
 import axiosInstance from "@/axiosConfig";
-import { reactive, ref, computed } from "vue";
+import { reactive, ref, computed, onMounted } from "vue";
 import FormComponent from "@/components/FormComponent.vue";
 import { useToast } from "vue-toastification";
 import { useStore } from "vuex";
+import { useRoute } from "vue-router";
+import { productsAuthInstance, productsInstance } from "@/axiosConfig";
 
-const form = ref({
+const route = useRoute();
+const toast = useToast();
+const store = useStore();
+
+const productId = route.params.id;
+
+const form = reactive({
   name: "",
   price: "",
   imageUrl: "",
   description: "",
 });
 
-const toast = useToast();
-const store = useStore();
+const state = reactive({
+  product: {},
+  isLoading: false,
+});
 
 // Check if user is authenticated
 const isAuthenticated = computed(() => store.getters.isAuthenticated);
 
 const handleSubmit = async (event) => {
   event.preventDefault();
+
+  const updatedProduct = {
+    name: form.name,
+    price: form.price,
+    imageUrl: form.imageUrl,
+    description: form.description,
+  };
+
   try {
-    await store.dispatch("createItem", form.value);
-    toast.success("Product added successfully");
-    router.push("/dashboard/products");
+    await productsAuthInstance.put(`${productId}`, updatedProduct);
+    toast.success("Product updated successfully");
+    router.push("/");
   } catch (error) {
-    console.error("Error adding product:", error);
-    toast.error("Error adding product");
+    console.error("Error updating product:", error);
+    toast.error("Error updating product");
   }
 };
+
+onMounted(async () => {
+  try {
+    // state.isLoading = true;
+    const response = await productsInstance.get(`/${productId}`);
+
+    state.product = await response.data;
+
+    //populate inputs
+    form.name = state.product.name;
+    form.price = state.product.price;
+    form.imageUrl = state.product.imageUrl;
+    form.description = state.product.description;
+  } catch (error) {
+    console.error("Error fetching product", error);
+    toast.error("Error fetching product");
+  } finally {
+    state.isLoading = false;
+  }
+});
 </script>
 
 <template>

@@ -7,9 +7,12 @@ const router = useRouter();
 const store = useStore();
 const route = useRoute();
 
+
 const props = defineProps({
   product: Object,
 });
+
+
 
 // Check if user is authenticated
 const isAuthenticated = computed(() => store.getters.isAuthenticated);
@@ -17,9 +20,11 @@ const isAuthenticated = computed(() => store.getters.isAuthenticated);
 // Determine the product link based on authentication status
 const productLink = computed(() =>
   isAuthenticated.value
-    ? "/dashboard/products/" + props.product.id
-    : "/products/" + props.product.id
+    ? "/dashboard/products/" + props.product._id
+    : "/products/" + props.product._id
 );
+
+
 
 const shortDescription = computed(() => {
   let description = props.product.description;
@@ -37,7 +42,7 @@ const shortDescription = computed(() => {
 
     <div class="mb-5">
       <img
-        :src="product.imageURL"
+        :src="product.imageUrl"
         :alt="product.name"
         class="w-full h-48 object-contain rounded-lg"
       />

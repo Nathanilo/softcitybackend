@@ -36,12 +36,13 @@ const state = reactive({
 });
 
 onMounted(async () => {
+  state.isLoading = true;
   try {
-    state.isLoading = true;
-    const response = await axios.get("http://localhost:3000/products");
-    state.products = response.data;
+    await store.dispatch("fetchItems");
+    state.products = store.getters.getItems;
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching items:", error);
+    toast.error("Error fetching products");
   } finally {
     state.isLoading = false;
   }
@@ -64,6 +65,7 @@ const filteredProducts = computed(() => {
     product.name.toLowerCase().includes(state.searchTerm.toLowerCase())
   );
 });
+console.log(filteredProducts);
 
 const handleSearch = (event) => {
   state.searchTerm = event.target.value;

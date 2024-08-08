@@ -7,6 +7,7 @@ import SignupView from "@/views/SignupView.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
 import ProductView from "@/views/ProductView.vue";
 import AddProductView from "@/views/AddProductView.vue";
+import EditProductView from "@/views/EditProductView.vue";
 
 const routes = [
   {
@@ -39,7 +40,12 @@ const routes = [
     component: AddProductView,
     meta: { requiresAuth: true },
   },
-
+  {
+    path: "/dashboard/edit-product/:id",
+    name: "edit-product",
+    component: EditProductView,
+    meta: { requiresAuth: true },
+  },
   {
     path: "/products",
     name: "products",

@@ -2,7 +2,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import axios from "./axiosConfig";
+import {authInstance, productsInstance, productsAuthInstance } from "./axiosConfig";
 import Toast, { POSITION } from "vue-toastification";
 
 import "./assets/main.css";
@@ -13,7 +13,10 @@ import "vue-toastification/dist/index.css";
 const app = createApp(App);
 
 // Configure global properties
-app.config.globalProperties.$http = axios;
+app.config.globalProperties.$http = authInstance; // Set default instance if needed
+app.config.globalProperties.$auth = authInstance;
+app.config.globalProperties.$products = productsInstance;
+app.config.globalProperties.$productsAuth = productsAuthInstance;
 
 // Configure and use plugins
 app.use(store);

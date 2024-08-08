@@ -3,10 +3,17 @@ import BackButton from "@/components/BackButton.vue";
 import { useRoute, RouterLink, useRouter } from "vue-router";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import { ref, reactive, onMounted, watch, computed } from "vue";
-import axios from "axios";
+import { useToast } from "vue-toastification";
+import { productsInstance } from "@/axiosConfig";
+import { productsAuthInstance } from "@/axiosConfig";
+import { useStore } from "vuex";
+
+
+const store = useStore();
 
 const route = useRoute();
 const router = useRouter();
+const toast = useToast();
 
 const currentPath = ref(route.path);
 
@@ -20,9 +27,7 @@ const state = reactive({
 onMounted(async () => {
   try {
     state.isLoading = true;
-    const response = await axios.get(
-      `http://localhost:3000/products/${productId.value}`
-    );
+    const response = await productsInstance.get(`/${productId.value}`);
     state.product = response.data;
   } catch (error) {
     console.error(error);
@@ -30,6 +35,23 @@ onMounted(async () => {
     state.isLoading = false;
   }
 });
+
+const handleDelete = async (event) => {
+  event.preventDefault();
+  try {
+    await store.dispatch("removeItem", productId.value);
+    router.push("/dashboard/products");
+    toast.success("Product removed successfully");
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    toast.error("Error deleting product");
+  }
+};
+
+const handleEdit = async (event) => {
+  event.preventDefault();
+  router.push(`/dashboard/edit-product/${productId.value}`);
+};
 
 // Watch for route changes
 watch(
@@ -53,7 +75,7 @@ watch(
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="bg-white rounded-xl p-6">
             <img
-              :src="state.product.imageURL"
+              :src="state.product.imageUrl"
               alt="product"
               class="w-full h-80 object-contain rounded-xl"
             />
@@ -72,12 +94,16 @@ watch(
                 v-if="currentPath.endsWith('/dashboard/products/' + productId)"
                 class="absolute right-4 text-sm sm:text-2xl"
               >
-                <i
-                  class="pi pi-trash text-black mr-8 cursor-pointer hover:text-primary"
-                ></i>
-                <i
-                  class="pi pi-pen-to-square text-black cursor-pointer hover:text-primary"
-                ></i>
+                <button @click="handleDelete">
+                  <i
+                    class="pi pi-trash text-black mr-8 cursor-pointer hover:text-primary"
+                  ></i>
+                </button>
+                <button @click="handleEdit">
+                  <i
+                    class="pi pi-pen-to-square text-black cursor-pointer hover:text-primary"
+                  ></i>
+                </button>
               </span>
             </p>
           </div>

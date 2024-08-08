@@ -1,5 +1,9 @@
 import { createStore } from "vuex";
-import axiosInstance from "@/axiosConfig";
+import {
+  productsInstance,
+  authInstance,
+  productsAuthInstance,
+} from "@/axiosConfig";
 
 export default createStore({
   state: {
@@ -32,12 +36,13 @@ export default createStore({
     logout(state) {
       state.user = null;
       state.token = null;
+      localStorage.removeItem("token");
     },
   },
   actions: {
     async fetchItems({ commit }) {
       try {
-        const response = await axiosInstance.get("/products");
+        const response = await productsInstance.get("/");
         commit("setItems", response.data);
       } catch (error) {
         console.error("Error fetching items:", error);
@@ -45,7 +50,7 @@ export default createStore({
     },
     async createItem({ commit }, item) {
       try {
-        const response = await axiosInstance.post("/products", item);
+        const response = await productsAuthInstance.post("/", item);
         commit("addItem", response.data);
       } catch (error) {
         console.error("Error creating item:", error);
@@ -53,7 +58,7 @@ export default createStore({
     },
     async editItem({ commit }, item) {
       try {
-        const response = await axiosInstance.put(`/products/${item.id}`, item);
+        const response = await productsAuthInstance.put(`${item.id}`, item);
         commit("updateItem", response.data);
       } catch (error) {
         console.error("Error editing item:", error);
@@ -61,7 +66,7 @@ export default createStore({
     },
     async removeItem({ commit }, itemId) {
       try {
-        await axiosInstance.delete(`/products/${itemId}`);
+        await productsInstance.delete(`/products/${itemId}`);
         commit("deleteItem", itemId);
       } catch (error) {
         console.error("Error deleting item:", error);
@@ -69,10 +74,11 @@ export default createStore({
     },
     async login({ commit }, credentials) {
       try {
-        const response = await axiosInstance.post("/login", credentials);
+        const response = await authInstance.post("/login", credentials);
         const { user, token } = response.data;
         commit("setUser", user);
         commit("setToken", token);
+        localStorage.setItem("token", token);
         axiosInstance.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${token}`;
@@ -82,7 +88,7 @@ export default createStore({
     },
     logout({ commit }) {
       commit("logout");
-      delete axiosInstance.defaults.headers.common["Authorization"];
+      delete authInstance.defaults.headers.common["Authorization"];
     },
   },
   getters: {
