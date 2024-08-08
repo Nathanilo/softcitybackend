@@ -86,13 +86,14 @@ export default createStore({
         );
 
         if (response.status !== 200) {
+          console.log(response)
           throw new Error(response.message);
         }
         const { user, token } = response.data;
         commit("setUser", user);
         commit("setToken", token);
         localStorage.setItem("token", token);
-        axiosInstance.defaults.headers.common[
+        authInstance.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${token}`;
       } catch (error) {
