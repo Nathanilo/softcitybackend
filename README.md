@@ -8,7 +8,7 @@
 
 ## Requirements
 
-- Ensure backend is running. See backend repo [here](https://github.com/Nathanilo/softcitybackend)
+- Ensure backend is running. See backend repo [here](https://github.com/Nathanilo/softcityapi)
 
 ## Steps
 
