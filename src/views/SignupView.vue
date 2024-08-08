@@ -1,6 +1,6 @@
 <script setup>
 import router from "@/router";
-import axiosInstance from "@/axiosConfig";
+import { authInstance } from "@/axiosConfig";
 import { reactive, ref } from "vue";
 import FormComponent from "@/components/FormComponent.vue";
 import { useToast } from "vue-toastification";
@@ -17,7 +17,7 @@ const handleSubmit = async (event) => {
   event.preventDefault();
   try {
     console.log(form.value);
-    const response = await axiosInstance.post("/register", form.value);
+    const response = await authInstance.post("/register", form.value);
     console.log(response.data);
     router.push("/login");
     toast.success("Signup successful.");

@@ -42,7 +42,7 @@ const handleSubmit = async (event) => {
   try {
     await productsAuthInstance.put(`${productId}`, updatedProduct);
     toast.success("Product updated successfully");
-    router.push("/");
+    router.push("/dashboard");
   } catch (error) {
     console.error("Error updating product:", error);
     toast.error("Error updating product");
@@ -51,7 +51,7 @@ const handleSubmit = async (event) => {
 
 onMounted(async () => {
   try {
-    // state.isLoading = true;
+    state.isLoading = true;
     const response = await productsInstance.get(`/${productId}`);
 
     state.product = await response.data;
@@ -77,7 +77,7 @@ onMounted(async () => {
         class="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0"
       >
         <FormComponent
-          title="Add product to SoftCity"
+          title="Edit Product details"
           :handleSubmit="handleSubmit"
         >
           <template v-slot:content>
@@ -146,7 +146,7 @@ onMounted(async () => {
                 class="bg-gray-700 text-white font-bold py-2 px-4 rounded-md w-full focus:outline-none focus:shadow-outline"
                 type="submit"
               >
-                Add Product
+                Submit
               </button>
             </div>
           </template>

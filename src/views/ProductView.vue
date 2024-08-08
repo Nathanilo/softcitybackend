@@ -39,7 +39,7 @@ onMounted(async () => {
 const handleDelete = async (event) => {
   event.preventDefault();
   try {
-    await store.dispatch("removeItem", productId.value);
+    await productsAuthInstance.delete(`/${productId.value}`);
     router.push("/dashboard/products");
     toast.success("Product removed successfully");
   } catch (error) {
