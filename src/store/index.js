@@ -50,7 +50,10 @@ export default createStore({
     },
     async createItem({ commit }, item) {
       try {
-        const response = await productsAuthInstance.post("/api/products/", item);
+        const response = await productsAuthInstance.post(
+          "/api/products/",
+          item
+        );
         commit("addItem", response.data);
       } catch (error) {
         console.error("Error creating item:", error);
@@ -58,7 +61,10 @@ export default createStore({
     },
     async editItem({ commit }, item) {
       try {
-        const response = await productsAuthInstance.put(`/api/products/${item.id}`, item);
+        const response = await productsAuthInstance.put(
+          `/api/products/${item.id}`,
+          item
+        );
         commit("updateItem", response.data);
       } catch (error) {
         console.error("Error editing item:", error);
@@ -74,7 +80,14 @@ export default createStore({
     },
     async login({ commit }, credentials) {
       try {
-        const response = await authInstance.post("/api/auth/login", credentials);
+        const response = await authInstance.post(
+          "/api/auth/login",
+          credentials
+        );
+
+        if (response.status !== 200) {
+          throw new Error(response.message);
+        }
         const { user, token } = response.data;
         commit("setUser", user);
         commit("setToken", token);
@@ -84,6 +97,7 @@ export default createStore({
         ] = `Bearer ${token}`;
       } catch (error) {
         console.error("Error logging in:", error);
+        throw error;
       }
     },
     logout({ commit }) {

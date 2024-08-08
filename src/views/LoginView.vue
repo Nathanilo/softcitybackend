@@ -28,7 +28,7 @@ const handleSubmit = async (event) => {
     toast.success("Login successful.");
   } catch (error) {
     console.error("Login failed:", error);
-    toast.error("An error occurred.");
+    toast.error(error.response.data.message);
   }
 };
 
